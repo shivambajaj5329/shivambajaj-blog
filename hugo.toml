@@ -23,7 +23,7 @@ keywords = ["Software Engineering", "System Design", "Distributed Systems", "Arc
 author = "Shivam Bajaj"
 images = ["/profile.jpg"]
 DateFormat = "January 2, 2006"
-defaultTheme = "auto"
+defaultTheme = "dark"
 disableThemeToggle = false
 
 ShowReadingTime = true
