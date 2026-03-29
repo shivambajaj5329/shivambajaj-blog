@@ -37,7 +37,7 @@ It's a complex relay race involving:
 
 **Key insight:** Latency isn't one big problem you solve. It's death by a thousand cuts.
 
-<img src="https://ljpeuvrslzjohldwfhsb.supabase.co/storage/v1/object/public/blog-images/blog-1754966386617.png" alt="Global Internet Latency Map" style="width: 700px; max-width: 100%; height: auto; margin: 20px auto; display: block; border-radius: 8px;">
+<img src="/images/blog-1754966386617.png" alt="Global Internet Latency Map" style="width: 700px; max-width: 100%; height: auto; margin: 20px auto; display: block; border-radius: 8px;">
 
 *Global Internet Latency. Source - Wondernetwork Ping Data* 
 
@@ -47,7 +47,7 @@ Every millisecond matters. And they add up faster than you think.
 
 ## The Journey of a Single Frame
 
-<img src="https://ljpeuvrslzjohldwfhsb.supabase.co/storage/v1/object/public/blog-images/blog-1753414300709.gif" alt="Packet distribution visualization" style="width: 700px; max-width: 100%; height: auto; margin: 20px auto; display: block; border-radius: 8px;">
+<img src="/images/blog-1753414300709.gif" alt="Packet distribution visualization" style="width: 700px; max-width: 100%; height: auto; margin: 20px auto; display: block; border-radius: 8px;">
 
 *Bird's eye view of a single packet being distributed*
 
