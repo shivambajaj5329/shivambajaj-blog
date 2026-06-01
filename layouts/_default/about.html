@@ -1,0 +1,46 @@
+{{- define "main" }}
+
+<article class="post-single about-page">
+    <section class="about-hero">
+        {{- with .Params.photo }}
+        <div class="about-hero-photo">
+            <img src="{{ . }}" alt="{{ $.Params.name | default $.Title }}">
+        </div>
+        {{- end }}
+        <div class="about-hero-text">
+            <h1 class="about-name">{{ .Params.name | default .Title }}</h1>
+            {{- with .Params.role }}
+            <p class="about-role">{{ . }}</p>
+            {{- end }}
+            {{- with .Params.location }}
+            <p class="about-location">{{ . }}</p>
+            {{- end }}
+            {{- with .Params.focus }}
+            <div class="about-focus">
+                {{- range . }}
+                <span class="tech-tag">{{ . }}</span>
+                {{- end }}
+            </div>
+            {{- end }}
+        </div>
+    </section>
+
+    <div class="post-content about-bio">
+        {{ .Content }}
+    </div>
+
+    {{- with .Params.contacts }}
+    <section class="about-contact">
+        <h2>Let's connect</h2>
+        <div class="about-contact-links">
+            {{- range . }}
+            <a href="{{ .href }}"{{- if not (hasPrefix .href "mailto:") }} target="_blank" rel="noopener noreferrer"{{- end }}>
+                {{ .label }} →
+            </a>
+            {{- end }}
+        </div>
+    </section>
+    {{- end }}
+</article>
+
+{{- end }}{{/* end main */}}

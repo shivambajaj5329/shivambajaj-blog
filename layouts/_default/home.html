@@ -1,0 +1,91 @@
+{{- define "main" }}
+
+{{- $about := site.GetPage "about" }}
+
+<section class="home-intro">
+    {{- with $about.Params.photo }}
+    <img class="home-intro-avatar" src="{{ . }}" alt="{{ $about.Params.name | default site.Title }}">
+    {{- end }}
+    <div class="home-intro-text">
+        {{- with site.Params.homeInfoParams.Title }}
+        <h1>{{ . | markdownify }}</h1>
+        {{- end }}
+        {{- with site.Params.homeInfoParams.Content }}
+        <p class="home-intro-tagline">{{ . | markdownify }}</p>
+        {{- end }}
+        {{- with $about.Params.focus }}
+        <div class="home-intro-focus">
+            {{- range . }}
+            <span class="tech-tag">{{ . }}</span>
+            {{- end }}
+        </div>
+        {{- end }}
+    </div>
+</section>
+
+{{- $projects := where site.RegularPages "Section" "projects" }}
+{{- if $projects }}
+<section class="home-section">
+    <div class="home-section-header">
+        <h2>Featured projects</h2>
+        <a class="home-section-cta" href="{{ "projects/" | absURL }}">All projects →</a>
+    </div>
+    <div class="project-grid">
+        {{- range $projects.ByWeight }}
+        <a class="project-card" href="{{ .Permalink }}" aria-label="{{ .Title }}">
+            {{- with .Params.status }}
+            <div class="project-card-status">{{ . }}</div>
+            {{- end }}
+            <h3 class="project-card-title">{{ .Title }}</h3>
+            {{- with .Params.tagline }}
+            <p class="project-card-tagline">{{ . }}</p>
+            {{- end }}
+            {{- with .Params.tech }}
+            <div class="project-card-tech">
+                {{- range . }}
+                <span class="tech-tag">{{ . }}</span>
+                {{- end }}
+            </div>
+            {{- end }}
+            <div class="project-card-cta">View project →</div>
+        </a>
+        {{- end }}
+    </div>
+</section>
+{{- end }}
+
+{{- $posts := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- if $posts }}
+<section class="home-section">
+    <div class="home-section-header">
+        <h2>Recent writing</h2>
+        <a class="home-section-cta" href="{{ "posts/" | absURL }}">All posts →</a>
+    </div>
+    <div class="post-card-grid">
+        {{- range first 3 $posts }}
+        <a class="post-card" href="{{ .Permalink }}" aria-label="{{ .Title }}">
+            <div class="post-card-meta">
+                <time>{{ .Date.Format (site.Params.DateFormat | default "Jan 2, 2006") }}</time>
+                {{- if .ReadingTime }}
+                <span class="post-card-dot">·</span>
+                <span>{{ .ReadingTime }} min read</span>
+                {{- end }}
+            </div>
+            <h3 class="post-card-title">{{ .Title }}</h3>
+            {{- if .Summary }}
+            <p class="post-card-summary">{{ .Summary | plainify | htmlUnescape | truncate 180 }}</p>
+            {{- end }}
+            {{- with .Params.tags }}
+            <div class="post-card-tags">
+                {{- range first 4 . }}
+                <span class="tech-tag">{{ . }}</span>
+                {{- end }}
+            </div>
+            {{- end }}
+        </a>
+        {{- end }}
+    </div>
+</section>
+{{- end }}
+
+{{- end }}{{/* end main */}}

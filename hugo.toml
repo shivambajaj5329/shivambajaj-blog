@@ -44,7 +44,7 @@ tocopen = false
 
 [params.homeInfoParams]
 Title = "Hey, I'm Shivam 👋"
-Content = "I write about system design, distributed systems, and backend architecture."
+Content = "Building small tools for problems no one else solves well enough. Writing about what I learn along the way."
 
 [[params.socialIcons]]
 name = "github"

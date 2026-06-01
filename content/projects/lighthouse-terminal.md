@@ -4,7 +4,7 @@ date: 2026-06-01
 summary: "A personal markets cockpit — watchlist, per-symbol charts, and composite alerts (AND / OR / THEN) that fire as light-of-death beams. Decision support only, never executes orders."
 tagline: "Composite alerts that fire as light-of-death beams. Decision support, not execution."
 tech: ["React", "TypeScript", "Vite", "Recharts", "FastAPI", "Redis", "Postgres"]
-status: "Phase 0 — UI prototype on mock feed"
+status: "Live - Self Hosted"
 github: ""
 demo: ""
 embed: "/embeds/lighthouse-terminal/"
