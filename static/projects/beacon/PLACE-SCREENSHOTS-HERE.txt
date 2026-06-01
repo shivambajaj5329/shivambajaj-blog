@@ -1,0 +1,14 @@
+Drop Beacon screenshots in this directory. The Beacon page expects these filenames:
+
+  today.png      — today's session screen (last-session lookup visible)
+  workout.png    — inline set logging
+  nutrition.png  — food log with time-of-day filter
+  summary.png    — weekly roll-up / goals progress
+
+If you use different filenames or want more/fewer images, edit the `gallery:`
+list in content/projects/beacon.md to match.
+
+PNG, JPG, or WebP all work. iPhone screenshots are fine — the gallery layout
+scales them down to a uniform width.
+
+You can delete this file once you've added the screenshots.

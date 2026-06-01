@@ -1,3 +1,206 @@
+<!-- Projects section styling -->
+<style>
+/* Widen the main container on Projects pages only */
+body:has(.project-grid),
+body:has(.project-single) {
+    --main-width: 1080px;
+}
+
+.projects-intro {
+    font-size: 1.05rem;
+    color: var(--secondary);
+    margin-bottom: 2rem;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.25rem;
+    margin: 2rem 0;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+}
+
+.project-card-status {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+}
+
+.project-card-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+
+.project-card-tagline {
+    margin: 0 0 1rem 0;
+    color: var(--secondary);
+    line-height: 1.5;
+    flex: 1;
+}
+
+.project-card-tech,
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.5rem 0 0.75rem 0;
+}
+
+.tech-tag {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.55rem;
+    background: var(--code-bg);
+    color: var(--secondary);
+    border-radius: 4px;
+    font-family: var(--font-mono, monospace);
+}
+
+.project-card-cta {
+    margin-top: 0.75rem;
+    color: var(--primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Project detail page */
+.project-single .post-header {
+    margin-bottom: 1.5rem;
+}
+
+.project-status {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    margin-bottom: 1rem;
+}
+
+.project-tagline {
+    font-size: 1.15rem;
+    color: var(--secondary);
+    line-height: 1.55;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.project-links a {
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.project-links a:hover {
+    border-color: var(--primary);
+    background: var(--code-bg);
+}
+
+.project-embed {
+    margin: 2rem 0;
+}
+
+.embed-caption {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--secondary);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.project-gallery {
+    margin: 3rem 0 1rem 0;
+}
+
+.project-gallery h2 {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-item {
+    margin: 0;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.gallery-item a {
+    display: block;
+}
+
+.gallery-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.15s ease;
+}
+
+.gallery-item:hover img {
+    opacity: 0.92;
+}
+
+.gallery-item figcaption {
+    padding: 0.6rem 0.85rem;
+    font-size: 0.85rem;
+    color: var(--secondary);
+    border-top: 1px solid var(--border);
+}
+
+.back-to-projects {
+    display: inline-block;
+    margin-top: 2rem;
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.back-to-projects:hover {
+    color: var(--primary);
+}
+</style>
+
 <!-- Mermaid.js for diagrams -->
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';

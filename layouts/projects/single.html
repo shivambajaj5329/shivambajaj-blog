@@ -1,0 +1,64 @@
+{{- define "main" }}
+
+<article class="post-single project-single">
+    <header class="post-header">
+        {{- with .Params.status }}
+        <div class="project-status">{{ . }}</div>
+        {{- end }}
+        <h1 class="post-title">{{ .Title }}</h1>
+        {{- with .Params.tagline }}
+        <p class="project-tagline">{{ . }}</p>
+        {{- end }}
+        {{- with .Params.tech }}
+        <div class="project-tech">
+            {{- range . }}
+            <span class="tech-tag">{{ . }}</span>
+            {{- end }}
+        </div>
+        {{- end }}
+        {{- if or .Params.github .Params.demo }}
+        <div class="project-links">
+            {{- with .Params.github }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">GitHub →</a>{{- end }}
+            {{- with .Params.demo }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">Demo →</a>{{- end }}
+        </div>
+        {{- end }}
+    </header>
+
+    {{- with .Params.embed }}
+    <div class="project-embed">
+        <iframe src="{{ . }}"
+                style="width:100%; height:{{ $.Params.embed_height | default "720px" }}; border:0; border-radius:8px; background:#050607;"
+                loading="lazy"
+                title="{{ $.Title }} live demo"></iframe>
+        <p class="embed-caption">↑ Running live in your browser on a mock data feed</p>
+    </div>
+    {{- end }}
+
+    <div class="post-content">
+        {{ .Content }}
+    </div>
+
+    {{- with .Params.gallery }}
+    <section class="project-gallery">
+        <h2>Screenshots</h2>
+        <div class="gallery-grid">
+            {{- range . }}
+            <figure class="gallery-item">
+                <a href="{{ .src }}" target="_blank" rel="noopener noreferrer">
+                    <img src="{{ .src }}" alt="{{ .caption | default "Screenshot" }}" loading="lazy">
+                </a>
+                {{- with .caption }}
+                <figcaption>{{ . }}</figcaption>
+                {{- end }}
+            </figure>
+            {{- end }}
+        </div>
+    </section>
+    {{- end }}
+
+    <footer class="post-footer">
+        <a class="back-to-projects" href="{{ "projects/" | absURL }}">← Back to projects</a>
+    </footer>
+</article>
+
+{{- end }}{{/* end main */}}
