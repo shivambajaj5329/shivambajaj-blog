@@ -25,6 +25,17 @@
     </header>
 
     {{- with .Params.embed }}
+    {{- if eq $.Params.embed_style "phone" }}
+    <div class="project-embed phone-embed">
+        <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <iframe src="{{ . }}"
+                    loading="lazy"
+                    title="{{ $.Title }} live demo"></iframe>
+        </div>
+        <p class="embed-caption">↑ Tap around — real UI, mock data, all in your browser</p>
+    </div>
+    {{- else }}
     <div class="project-embed">
         <iframe src="{{ . }}"
                 style="width:100%; height:{{ $.Params.embed_height | default "720px" }}; border:0; border-radius:8px; background:#050607;"
@@ -32,6 +43,7 @@
                 title="{{ $.Title }} live demo"></iframe>
         <p class="embed-caption">↑ Running live in your browser on a mock data feed</p>
     </div>
+    {{- end }}
     {{- end }}
 
     <div class="post-content">

@@ -7,15 +7,8 @@ tech: ["FastAPI", "SQLite", "HTMX", "Tailwind", "Docker", "Tailscale"]
 status: "Active — self-hosted"
 github: ""
 demo: ""
-gallery:
-  - src: "/projects/beacon/today.png"
-    caption: "Today's session — last-session lookup makes progressive overload effortless"
-  - src: "/projects/beacon/workout.png"
-    caption: "Inline set logging with HTMX — each set saves without leaving the page"
-  - src: "/projects/beacon/nutrition.png"
-    caption: "Manual food log with time-of-day filter"
-  - src: "/projects/beacon/summary.png"
-    caption: "Weekly roll-up: lifting minutes, run distance, macros vs. goals"
+embed: "/embeds/beacon/"
+embed_style: "phone"
 weight: 2
 ShowReadingTime: false
 ShowWordCount: false
@@ -23,6 +16,10 @@ ShowBreadCrumbs: true
 showtoc: false
 hidemeta: true
 ---
+
+## Live demo
+
+The mockup below is a React port of Beacon's UI running against in-browser mock data — the actual Beacon is a FastAPI app on my homeserver, accessible only over Tailscale. Tap through Today, Workout, Food, Summary, and Plan to get a feel.
 
 ## Why it exists
 
@@ -32,7 +29,7 @@ Every other fitness tracker tries to do too much, locks you into a subscription,
 
 **Last-session lookup is the killer feature.** Open an exercise and you see exactly what you did last time — weight, reps, RPE. Progressive overload happens without thinking about it.
 
-**HTMX, not SPA.** Each set saves on its own with an inline fragment swap. No build step, no state management, no "you have unsaved changes" anxiety. The whole frontend is Jinja2 + Tailwind CDN + a sprinkle of HTMX.
+**HTMX, not SPA.** In production, each set saves on its own with an inline fragment swap. No build step, no state management, no "you have unsaved changes" anxiety. The whole production frontend is Jinja2 + Tailwind CDN + a sprinkle of HTMX. *(The embedded demo here is a React port so it can run in your browser without a backend — same look, different plumbing.)*
 
 **Single-process by design.** One uvicorn worker. SQLite is single-writer, so adding workers would just create lock contention. ~180 MB image, <100 MB RAM idle. Runs forever on a cheap homeserver.
 
