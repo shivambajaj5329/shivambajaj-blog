@@ -1,8 +1,8 @@
 ---
 title: "Lighthouse Terminal"
 date: 2026-06-01
-summary: "A personal markets cockpit — watchlist, per-symbol charts, and composite alerts (AND / OR / THEN) that fire as light-of-death beams. Decision support only, never executes orders."
-tagline: "Composite alerts that fire as light-of-death beams. Decision support, not execution."
+summary: "A personal markets cockpit — watchlist, per-symbol charts, and composite alerts (AND / OR / THEN) that fire as light-of-death beams when compound conditions trigger."
+tagline: "Market alerts that sequence and arm. The Bloomberg terminal retail traders never got."
 tech: ["React", "TypeScript", "Vite", "Recharts", "FastAPI", "Redis", "Postgres"]
 status: "Live - Self Hosted"
 github: ""
@@ -17,22 +17,34 @@ showtoc: false
 hidemeta: true
 ---
 
-## Live demo
+> **Try it above.** Pick a symbol from the watchlist, set up an alert, and watch the beam land on the chart when the condition trips.
 
-The prototype below is the real frontend running against an in-browser mock feed. Charts tick, alerts fire, the THEN state machine advances — exactly what the real app does, just with synthetic ticks instead of a broker stream.
+## Why I built it
 
-> Try it: pick a symbol, set up an alert, watch the beam fire when the condition trips.
+Most consumer trading apps give you one kind of alert: "price crosses X." That's barely an alert. By the time the line gets crossed, half the people watching have already seen it coming and either acted on it or moved on. The notification arrives at the moment it stops being useful.
 
-## Why it exists
+The signals I actually care about are compound. "This stock has held above its 50-day moving average for three sessions AND volume just spiked above 2× average." Or — and this is the one that finally pushed me to build something — "RSI hits 70, then within 15 minutes price pulls back to the 20EMA and holds." That second one isn't a threshold. It's a small state machine. The first part arms the alert; the second part fires it; if the second part doesn't happen in time, the alert quietly disarms and resets.
 
-I wanted alerts that compose. Every consumer trading app gives you "price crosses X" and stops there. What I actually want is *"if RSI > 70 AND volume > 2× average, THEN if it pulls back to the 20EMA within 10 minutes, **then** fire."* That's a small state machine, not a threshold.
+I looked around. The expensive professional terminals can do this and a thousand other things I'll never use, for the price of a small mortgage payment per month. The consumer apps give you a price threshold and a notification banner. Nothing in the middle treated compound conditions as a first-class thing without me wiring up a Jupyter notebook every morning.
 
-So I built the combinator: AND / OR / THEN nodes over snapshot predicates, with a separate evaluator for the THEN sequences. The UI surfaces in-flight THEN alerts so you can see what's "armed" vs. what already fired.
+So I built it. AND / OR / THEN nodes over snapshot predicates, with a separate evaluator for the temporal sequences. The UI surfaces in-flight THEN alerts so I can see what's *armed* — meaning a setup is forming, the first leg has triggered, the clock is ticking — long before the actual fire. The whole point is to get a heads-up that something's about to happen, not a receipt for what already did.
+
+The visual language is "lights of death": each fire is a beam dropped onto the chart at the price and time it triggered, color-coded by the rule that produced it. The watchlist landing page shows me, at a glance, which symbols have something cooking — armed alerts, recent fires, sequences mid-flight.
+
+## How the alert combinator works
+
+The core abstraction is a tree of nodes:
+
+- **Predicate** — a snapshot test like `RSI > 70` or `price > 50MA`
+- **AND / OR** — composes child nodes against the same snapshot
+- **THEN** — a temporal sequence: child A must fire, then child B must fire within a window
+
+The evaluator splits cleanly along that line. Snapshot logic for AND / OR is pure and runs on every tick. THEN sequences are stateful and live in a separate evaluator that tracks armed timers and disarms on timeout. That separation is what makes the whole thing tractable to reason about — and it's also the seam that lets the same UI run against any source of ticks. Every view in the app consumes `(snapshot, alerts) → events`. Swap the feed underneath and nothing on top has to change.
 
 ## Architecture
 
 ```
-                    schwab-py            (later)
+                    schwab-py
                        │
                   ┌────▼────┐   ticks    ┌─────────┐
                   │ streamer├───────────►│  Redis  │  pub/sub + hot window
@@ -52,16 +64,19 @@ So I built the combinator: AND / OR / THEN nodes over snapshot predicates, with 
                     └─────────┘
 ```
 
-The seam that matters: every view consumes `(snapshot, alerts) → events`. The mock engine in `web/src/engine/mockFeed.ts` is the only thing that gets deleted when the real WebSocket feed exists. **The views never change.**
+Redis is the bus. Ticks land there, multiple subscribers fan out, the alert evaluator and the indicator engine both read from it. Postgres holds the alert definitions — the combinator tree gets serialized as JSONB — plus the history of every fire and every state transition, so I can ask "what triggered that beam at 11:43 yesterday" weeks later and get a real answer.
 
-## Phases
+The frontend is React + Vite + recharts, talking to FastAPI over REST for rules and history and over WebSocket for live ticks and fires.
 
-- **P0 (live above):** mock feed + client evaluator + 3 views (Chart / Alerts / Sequences). Pitchable.
-- **P1:** FastAPI read API, Postgres rule persistence, WS live fires. Swap mock feed for WS.
-- **P2:** schwab-py streamer + incremental indicators in the engine service.
-- **P3:** news worker (RSS + Finnhub), per-ticker digest.
-- **P4 (optional):** LLM rule parser + analyst summaries.
+## Stack
 
-## The line I'm not crossing
+- **Frontend:** React + TypeScript + Vite + recharts
+- **API:** FastAPI, REST + WebSocket
+- **Engine + evaluator:** Python services, separate from the API
+- **Bus + hot window:** Redis pub/sub
+- **Persistence:** Postgres (JSONB for alert trees, event log for fires)
+- **Market feed:** schwab-py streaming
 
-**No execution. Decision support only.** The app never places orders. The complexity budget for adding broker order routing — auth, idempotency, position sync, risk controls, regulatory — is enormous, and the moment you cross it the project stops being a tool and starts being a startup. Lighthouse is for *seeing*, not *acting*.
+## Where this is going
+
+The plan is to be a Bloomberg terminal for retail traders. Bloomberg costs around $24K a year per seat and is built for desks that move billions. Robinhood is built for people who want a red button and a green button. There's an enormous middle that nobody's serving — retail traders who manage their own money, read 10-Ks, run their own strategies, and want real tools without paying institutional pricing for capabilities they'll never touch. Compound alerts are the first piece. The rest of it — unified news, fast charts, watchlist intelligence, eventually order routing — is the same problem solved one piece at a time. Lighthouse is what I want that tool to look like.
