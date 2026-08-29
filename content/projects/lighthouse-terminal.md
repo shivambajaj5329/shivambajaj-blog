@@ -43,25 +43,39 @@ The evaluator splits cleanly along that line. Snapshot logic for AND / OR is pur
 
 ## Architecture
 
-```
-                    schwab-py
-                       │
-                  ┌────▼────┐   ticks    ┌─────────┐
-                  │ streamer├───────────►│  Redis  │  pub/sub + hot window
-                  └─────────┘            └────┬────┘
-                  ┌─────────┐  indicators     │
-                  │  engine ├─────────────────┤
-                  └─────────┘                 │
-                  ┌─────────┐  fire/step      │
-                  │evaluator├─────────────────┤  (the combinator tree)
-                  └─────────┘                 │
-   browser ◄── WS ──┌─────────┐◄──────────────┘
-                    │   api   │  FastAPI: REST + WS
-                    └────┬────┘
-                         │  Postgres: rules (JSONB tree), fire/step events
-                    ┌────▼────┐
-                    │   web   │  React + Vite + recharts
-                    └─────────┘
+```mermaid
+flowchart TD
+    subgraph Ingestion ["Data Ingestion"]
+        schwab["schwab-py streamer"]
+    end
+
+    subgraph Messaging ["Event Bus & Cache"]
+        redis[("Redis<br/>(Pub/Sub + Hot Window)")]
+    end
+
+    subgraph Processing ["Processing Engines"]
+        engine["Indicator Engine"]
+        evaluator["Alert Evaluator<br/>(Combinator Tree)"]
+    end
+
+    subgraph Backend ["Backend & Storage"]
+        api["FastAPI<br/>(REST + WebSocket)"]
+        postgres[("PostgreSQL<br/>(Rules JSONB & Logs)")]
+    end
+
+    subgraph Frontend ["Client"]
+        web["React + Vite + Recharts<br/>(Web UI)"]
+    end
+
+    schwab -->|"ticks"| redis
+    redis -->|"ticks"| engine
+    redis -->|"ticks"| evaluator
+    engine -->|"indicators"| redis
+    evaluator -->|"fire / step events"| redis
+
+    redis -->|"events & ticks"| api
+    api <-->|"persist rules & fires"| postgres
+    web <-->|"REST (rules) & WS (live feed)"| api
 ```
 
 Redis is the bus. Ticks land there, multiple subscribers fan out, the alert evaluator and the indicator engine both read from it. Postgres holds the alert definitions — the combinator tree gets serialized as JSONB — plus the history of every fire and every state transition, so I can ask "what triggered that beam at 11:43 yesterday" weeks later and get a real answer.
