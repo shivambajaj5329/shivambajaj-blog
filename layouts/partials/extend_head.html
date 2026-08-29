@@ -758,35 +758,105 @@ body:has(.about-page) {
 .back-to-projects:hover {
     color: var(--primary);
 }
+/* Mermaid diagram styling */
+.mermaid {
+    display: flex;
+    justify-content: center;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.25rem;
+    margin: 1.75rem 0;
+    overflow-x: auto;
+}
+
+.mermaid svg {
+    max-width: 100%;
+    height: auto;
+}
 </style>
 
 <!-- Mermaid.js for diagrams -->
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ 
-    startOnLoad: true,
-    theme: document.body.className.includes("dark") ? 'dark' : 'default'
-  });
-  
-  // Update Mermaid theme when dark mode is toggled
-  window.addEventListener('DOMContentLoaded', () => {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          const isDark = document.body.className.includes("dark");
-          mermaid.initialize({ 
-            startOnLoad: true,
-            theme: isDark ? 'dark' : 'default'
-          });
-          // Re-render all mermaid diagrams
-          document.querySelectorAll('.mermaid').forEach((element) => {
-            element.removeAttribute('data-processed');
-          });
-          mermaid.run();
-        }
-      });
+
+  function isDarkMode() {
+    return document.documentElement.getAttribute("data-theme") === "dark" ||
+           document.body.classList.contains("dark") ||
+           (!document.documentElement.getAttribute("data-theme") && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+
+  function getMermaidConfig() {
+    const dark = isDarkMode();
+    return {
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: dark ? {
+        darkMode: true,
+        background: '#1e1e24',
+        mainBkg: '#2d3139',
+        nodeBorder: '#4a5568',
+        nodeTextColor: '#e2e8f0',
+        clusterBkg: '#1a1d24',
+        clusterBorder: '#374151',
+        titleColor: '#93c5fd',
+        lineColor: '#60a5fa',
+        edgeLabelBackground: '#1e1e24',
+        textColor: '#e2e8f0',
+        actorBkg: '#2d3139',
+        actorBorder: '#4a5568',
+        actorTextColor: '#e2e8f0',
+        labelBoxBkgColor: '#2d3139',
+        labelBoxBorderColor: '#4a5568',
+        labelTextColor: '#e2e8f0'
+      } : {
+        darkMode: false,
+        background: '#ffffff',
+        mainBkg: '#f8fafc',
+        nodeBorder: '#cbd5e1',
+        nodeTextColor: '#0f172a',
+        clusterBkg: '#f1f5f9',
+        clusterBorder: '#cbd5e1',
+        titleColor: '#1e293b',
+        lineColor: '#3b82f6',
+        edgeLabelBackground: '#ffffff',
+        textColor: '#0f172a',
+        actorBkg: '#f8fafc',
+        actorBorder: '#cbd5e1',
+        actorTextColor: '#0f172a'
+      }
+    };
+  }
+
+  function renderMermaid() {
+    // Store original source if not stored yet
+    document.querySelectorAll('.mermaid').forEach((el) => {
+      if (!el.getAttribute('data-mermaid-src')) {
+        el.setAttribute('data-mermaid-src', el.textContent.trim());
+      }
+      el.removeAttribute('data-processed');
+      el.innerHTML = el.getAttribute('data-mermaid-src');
     });
-    
+
+    mermaid.initialize(getMermaidConfig());
+    mermaid.run({
+      querySelector: '.mermaid'
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    renderMermaid();
+
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'attributes' && (mutation.attributeName === 'data-theme' || mutation.attributeName === 'class')) {
+          renderMermaid();
+          break;
+        }
+      }
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
     observer.observe(document.body, { attributes: true });
   });
 </script>
