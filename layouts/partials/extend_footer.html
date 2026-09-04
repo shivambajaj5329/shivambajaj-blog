@@ -17,3 +17,24 @@
     {{- end }}
 </div>
 {{- end }}
+
+{{- /* The endpoint receives a request IP only long enough for Vercel's coarse
+      location headers; our database stores aggregate location counts only. */ -}}
+<script>
+(function () {
+    if (window.__viewCounterSent) return;
+    window.__viewCounterSent = true;
+    fetch('/api/view', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pagePath: window.location.pathname })
+    }).then(function (response) {
+        return response.ok ? response.json() : null;
+    }).then(function (data) {
+        if (!data) return;
+        document.querySelectorAll('#visitor-total, #visitor-total-mobile').forEach(function (element) {
+            element.textContent = Number(data.views || 0).toLocaleString();
+        });
+    }).catch(function () {});
+}());
+</script>

@@ -1,0 +1,49 @@
+{{- define "main" }}
+<article class="post-single visitors-page">
+    <header class="post-header">
+        <h1 class="post-title">Visitors</h1>
+    </header>
+
+    <section class="visitor-map-shell" aria-label="Visitor map">
+        <div class="visitor-map-content">
+            <div class="visitor-map-toolbar">
+                <span class="visitor-total-stat"><strong><span id="visitor-total">0</span> views</strong></span>
+                <div class="visitor-sources" aria-label="Visitor sources">
+                    <span>Google <strong id="source-google">0</strong></span>
+                    <span>LinkedIn <strong id="source-linkedin">0</strong></span>
+                    <span>GitHub <strong id="source-github">0</strong></span>
+                    <span>Other <strong id="source-other">0</strong></span>
+                </div>
+                <span class="visitor-famous-stat">Most famous: <strong id="most-popular-city">Atlanta, GA</strong></span>
+            </div>
+            <div id="visitor-map" class="visitor-map" role="img" aria-label="Interactive map showing aggregated visitor locations"></div>
+        </div>
+    </section>
+
+    <section class="visitor-mobile-count" aria-live="polite">
+            <strong><span id="visitor-total-mobile">0</span> views</strong>
+        <span>Visitor map is available on larger screens.</span>
+    </section>
+
+    <p class="visitor-privacy-note">
+        I’m a huge believer in privacy. I don’t store names, IP addresses, street addresses, visitor IDs,
+        or anything that identifies you. All I keep is the approximate city or region where this website was
+        opened and an aggregate view count. Every page view increments that count because I genuinely love
+        knowing that people are willing to read me yapping. It really motivates me to keep writing.
+        I also keep only broad, aggregate source counts for Google, LinkedIn, GitHub, and other sources.
+        You’re welcome to view the source code on
+        <a href="https://github.com/shivambajaj5329" target="_blank" rel="noopener noreferrer">GitHub</a>,
+        and I’m happy to provide any additional information by
+        <a href="mailto:shivamb1298@gmail.com">email</a>.
+    </p>
+</article>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+    window.visitorMapConfig = {
+        cartoApiKey: "{{ getenv "CARTO_API_KEY" | default "" | htmlEscape }}"
+    };
+</script>
+<script src="{{ "js/visitors.js" | relURL }}" defer></script>
+{{- end }}

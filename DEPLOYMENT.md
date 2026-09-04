@@ -35,6 +35,18 @@ git push -u origin main
    - Name: `HUGO_VERSION`
    - Value: `0.139.3`
 
+## Step 2.5: Configure the visitor map
+
+1. Create a Neon project at https://neon.tech.
+2. Open the Neon SQL Editor and run the contents of `neon/schema.sql`.
+3. In Vercel, open **Project Settings → Environment Variables**.
+4. Add `DATABASE_URL` with the connection string copied from Neon for Production, Preview, and Development.
+5. Redeploy. The `/visitors/` page will show the desktop map and a mobile-only view count.
+
+The application stores only aggregate location counts. It does not write raw IP addresses,
+visitor IDs, cookies, exact coordinates, or individual timestamps to Neon. Hosting and
+geolocation providers may have their own request-log policies, so review those separately.
+
 6. Click "Deploy"
 
 Wait ~1 minute for build to complete!

@@ -21,3 +21,5 @@ package-lock.json
 # Temporary files
 *.tmp
 *.bak
+.neon
+.env.local

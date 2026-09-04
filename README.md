@@ -86,6 +86,20 @@ Use [RealFaviconGenerator](https://realfavicongenerator.net/) to create them.
 
 ## 🚢 Deployment
 
+### Visitor map (Neon)
+
+The site includes a desktop-only `/visitors/` map and a lightweight mobile view counter.
+It stores aggregate city/region counts in Neon PostgreSQL. Raw IP addresses, visitor IDs,
+cookies, exact coordinates, and individual event timestamps are not stored by this project.
+
+1. Create a Neon project and copy its `DATABASE_URL`.
+2. Run `neon/schema.sql` in the Neon SQL Editor.
+3. Add `DATABASE_URL` to your Vercel project under **Settings → Environment Variables**.
+4. Redeploy the site. Vercel supplies the approximate location headers used by the API.
+
+The API endpoints are `/api/view` (record a view) and `/api/view-data` (public aggregate map data).
+Review your privacy notice and hosting/provider logs before enabling this in production.
+
 ### Deploy to Vercel (Recommended)
 
 1. Push your code to GitHub
