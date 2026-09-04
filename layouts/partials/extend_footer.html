@@ -28,6 +28,13 @@
     var lastView = parseInt(localStorage.getItem(storageKey) || '0', 10);
     var tenMinutes = 10 * 60 * 1000;
 
+    // If the user navigated here from a different page on this site,
+    // treat it as a fresh visit regardless of the 10-minute window.
+    var referrerPath = '';
+    try { referrerPath = new URL(document.referrer).pathname; } catch (e) {}
+    var navigatedFromElsewhere = referrerPath && referrerPath !== pagePath;
+    if (navigatedFromElsewhere) { lastView = 0; }
+
     if (now - lastView < tenMinutes) return;
 
     localStorage.setItem(storageKey, now.toString());
