@@ -178,6 +178,11 @@ body:has(.about-page) {
 }
 .visitor-privacy-note a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 @keyframes visitor-pulse { 0%, 100% { filter: drop-shadow(0 0 1px var(--visitor-glow)); } 50% { filter: drop-shadow(0 0 6px var(--visitor-glow)); } }
+.leaflet-div-icon { background: none !important; border: none !important; box-shadow: none !important; }
+.vm-wrap { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; pointer-events: none; }
+.vm-dot { position: relative; z-index: 2; border-radius: 50%; width: 36%; height: 36%; background: var(--vm-c); box-shadow: 0 0 7px 1px var(--vm-s); flex-shrink: 0; }
+.vm-ring { position: absolute; top: 50%; left: 50%; margin-top: -19%; margin-left: -19%; z-index: 1; border-radius: 50%; border: 1.5px solid var(--vm-s); width: 38%; height: 38%; animation: vm-ping 2.4s ease-out infinite; animation-delay: var(--vm-d, 0s); }
+@keyframes vm-ping { 0% { transform: scale(1); opacity: 0.75; } 70%, 100% { transform: scale(2.8); opacity: 0; } }
 .visitor-pulse { animation: visitor-pulse 2.5s ease-in-out infinite; }
 .visitor-map { --visitor-glow: #22d3ee; }
 html[data-theme="light"] .visitor-map { --visitor-glow: #a855f7; }

@@ -22,12 +22,20 @@
       location headers; our database stores aggregate location counts only. */ -}}
 <script>
 (function () {
-    if (window.__viewCounterSent) return;
-    window.__viewCounterSent = true;
+    var pagePath = window.location.pathname;
+    var storageKey = 'view_timestamp_' + pagePath;
+    var now = Date.now();
+    var lastView = parseInt(localStorage.getItem(storageKey) || '0', 10);
+    var tenMinutes = 10 * 60 * 1000;
+
+    if (now - lastView < tenMinutes) return;
+
+    localStorage.setItem(storageKey, now.toString());
+
     fetch('/api/view', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pagePath: window.location.pathname })
+        body: JSON.stringify({ pagePath: pagePath })
     }).then(function (response) {
         return response.ok ? response.json() : null;
     }).then(function (data) {
