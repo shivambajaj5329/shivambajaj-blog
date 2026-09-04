@@ -30,7 +30,9 @@ function geoFromRequest(request) {
 }
 
 function sourceFromRequest(request) {
-  const referer = header(request, "referer") || header(request, "referrer") || "";
+  // Client sends document.referrer in the POST body; fall back to HTTP Referer header.
+  const referer = (typeof request.body?.referrer === "string" ? request.body.referrer : null) ||
+                  header(request, "referer") || header(request, "referrer") || "";
   const source = referer.toLowerCase();
 
   if (source.includes("google.")) return "Google";

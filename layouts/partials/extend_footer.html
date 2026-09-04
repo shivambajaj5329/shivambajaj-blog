@@ -42,7 +42,7 @@
     fetch('/api/view', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pagePath: pagePath })
+        body: JSON.stringify({ pagePath: pagePath, referrer: document.referrer })
     }).then(function (response) {
         return response.ok ? response.json() : null;
     }).then(function (data) {
