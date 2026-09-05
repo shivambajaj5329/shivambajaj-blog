@@ -42,7 +42,7 @@ So the ability is here. The payoff is here. One real breakthrough still pays mor
 
 Which means "why did we stop" has an answer, and it is not a flattering one. We did not stop because we ran out of hard problems. We stopped because we found a way to get the return without the wait. The wrapper is a bet on the next twelve months. The Burj Khalifa was a bet on the next fifty years. And somewhere in here we decided the twelve month bet was the smart money and the fifty year bet was for suckers.
 
-The generation before us built the tallest thing on earth because someone decided the sky was up for negotiation. They taught metal to fly. What are we going to leave behind? Another chatbot?
+So I often find myself coming back to this, the generation before us built the tallest thing on earth because someone decided the sky was up for negotiation. They taught metal to fly. What are we going to leave behind? Another chatbot?
 
 ---
 
