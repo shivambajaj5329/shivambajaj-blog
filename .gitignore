@@ -3,6 +3,9 @@ public/
 resources/_gen/
 .hugo_build.lock
 
+
+# Private drafts (not for public repo)
+content/drafts-private/
 # OS
 .DS_Store
 Thumbs.db
