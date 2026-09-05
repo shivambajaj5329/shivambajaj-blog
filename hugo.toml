@@ -74,7 +74,7 @@ hiddenInList = true
 hiddenInSingle = true
 
 [params.editPost]
-URL = "https://github.com/shivambajaj5329/blog/tree/main/content"
+URL = "https://github.com/shivambajaj5329/shivambajaj-blog/tree/main/content"
 Text = "Suggest Changes"
 appendFilePath = true
 
