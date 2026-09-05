@@ -7,7 +7,7 @@ categories: ["Essays"]
 author: "Shivam Bajaj"
 showToc: false
 TocOpen: false
-description: "My take on the rising AI plague of our generation"
+description: "My take on the rising AI plague of this generation"
 ---
 
 <img src="/images/why-did-we-stop-innovating-header.jpg" alt="A towering Gothic cathedral spire rising out of a sea of clouds at sunrise, beside a laptop floating in the same clouds showing a chat app" style="width: 700px; max-width: 100%; height: auto; margin: 20px auto; display: block; border-radius: 8px;">
@@ -34,15 +34,13 @@ Because the hard thing still works. It still pays. It pays obscenely.
 
 A few weeks back $MRNA and Merck dropped phase 3 data on a personalized cancer vaccine, the kind that reads your own tumor and trains your immune system to go hunt it down. The stock roughly doubled in a single day, something like forty billion dollars in value showing up overnight, all because someone spent a decade on a problem that might not have worked.
 
-And yeah, before someone points it out: one of the other names doing real work here, $CAI, is itself an AI company. It runs machine learning over your biology to catch cancer from a blood test before it spreads. That is not the exception to my point, it is my point. The difference between $CAI and the fortieth email-summarizer was never the AI. It was the problem they had the nerve to aim it at. One went after cancer. The other went after your inbox.
-
-Nobody built any of that with a wrapper and a weekend. These are fifteen-year problems somebody actually sat inside of.
+Nobody built that with a wrapper and a weekend. It is a fifteen-year bet somebody actually sat inside of.
 
 So the ability is here. The payoff is here. One real breakthrough still pays more in a single afternoon than a thousand email-summarizers will in their entire lifecycle.
 
 Which means "why did we stop" has an answer, and it is not a flattering one. We did not stop because we ran out of hard problems. We stopped because we found a way to get the return without the wait. The wrapper is a bet on the next twelve months. The Burj Khalifa was a bet on the next fifty years. And somewhere in here we decided the twelve month bet was the smart money and the fifty year bet was for suckers.
 
-So I often find myself coming back to this, the generation before us built the tallest thing on earth because someone decided the sky was up for negotiation. They taught metal to fly. What are we going to leave behind? Another chatbot?
+So I find myself coming back to this, the generation before us built the tallest thing on earth because someone decided the sky was up for negotiation. They taught metal to fly. What are we going to leave behind? Another chatbot?
 
 ---
 
