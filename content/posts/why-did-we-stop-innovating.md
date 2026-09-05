@@ -7,7 +7,7 @@ categories: ["Essays"]
 author: "Shivam Bajaj"
 showToc: false
 TocOpen: false
-description: "We didn't lose the ability to build the impossible. We stopped funding the fifty year bet. On AI wrappers, capital's shrinking time horizon, and what we point our best tools at."
+description: "My take on the rising AI plague of our generation"
 ---
 
 <img src="/images/why-did-we-stop-innovating-header.jpg" alt="A towering Gothic cathedral spire rising out of a sea of clouds at sunrise, beside a laptop floating in the same clouds showing a chat app" style="width: 700px; max-width: 100%; height: auto; margin: 20px auto; display: block; border-radius: 8px;">
